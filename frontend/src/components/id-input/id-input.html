@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ID Input</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="id-input.js" defer></script>
+  </head>
+  <body>
+    <h1>Enter ID</h1>
+    <main id="app">
+        <p>Try typing spaces, punctuation, or special characters into each box to see the difference made by the key handler.</p>
+            <input v-model="idnum" @keypress.prevent @keyup=idnumChange></input> <button :disabled=!submit>Submit</button>
+      </main>
+  </body>
+</html>
