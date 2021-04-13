@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  frontend-server:
+    image: nginx:1-alpine
+    volumes:
+      - type: bind
+        source: ./src
+        target: /usr/share/nginx/html
+        read_only: true
+    ports:
+      - 8080:80
+    depends_on:
+      - backend-server
+
+  backend-server:
+    image: danielgtaylor/apisprout
+    command: https://gitlab.com/LibreFoodPantry/training/spikeathons/winter-2021/stoney-manage-items/backend/-/raw/main/src/openapi.yaml
+    environment:
+      SPROUT_VALIDATE_REQUEST: 1
+    ports:
+      - 10001:8000
