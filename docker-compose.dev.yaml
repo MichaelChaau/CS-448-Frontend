@@ -2,9 +2,12 @@ version: "3.8"
 services:
 
   frontend-server:
-    image: registry.gitlab.com/librefoodpantry/training/spikeathons/winter-2021/stoney-manage-items/frontend:latest
-    environment:
-      BACKEND_BASE_URL: http://localhost:10001/v0
+    image: nginx:1-alpine
+    volumes:
+      - type: bind
+        source: ./src
+        target: /usr/share/nginx/html
+        read_only: true
     ports:
       - 8080:80
     depends_on:
@@ -15,7 +18,7 @@ services:
     ports:
       - 10001:3000
     environment:
-      HOST_BASE_URL: http://localhost:10001/v0
+      HOST_BASE_URL: http://localhost:10001
       MONGO_URI: mongodb://backend-database
     networks:
       - backend-network

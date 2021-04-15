@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Manage Items</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <h1>Manage Items</h1>
+    <div id="app">
+      <input v-model="newItemName"></input>
+      <button @click="addItem">Add Item</button>
+      <div v-show="addItemStatus === 'errored'">Could not add item.</div>
+      <div v-show="addItemStatus === 'sending'">Adding item. Please wait.</div>
+      <div v-show="status === 'errored'">Could not load items.</div>
+      <div v-show="status === 'loading'">Loading items. Please wait...</div>
+      <div v-show="status === 'loaded' && items.length === 0">No items.</div>
+      <ul v-show="status === 'loaded' && items.length !== 0">
+        <li v-for="item in items" :key="item._id">{{item.name}}</li>
+      </ul>
+    </div>
+  </body>
+</html>
