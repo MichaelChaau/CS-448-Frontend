@@ -1,22 +1,16 @@
 FROM node:14-alpine
-
-# install simple http server for serving static content
-RUN npm install -g http-server@0.12.3
-
-# make the 'app' folder the current working directory
+ENV JQ_VERSION=1.6
+RUN wget --no-check-certificate https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 -O /tmp/jq-linux64
+RUN cp /tmp/jq-linux64 /usr/bin/jq
+RUN chmod +x /usr/bin/jq
 WORKDIR /app
+COPY ./src .
+RUN jq 'to_entries | map_values({ (.key) : ("$" + .key) }) | reduce .[] as $item ({}; . + $item)' ./env.json > ./env.tmp.json && mv ./env.tmp.json ./env.json
 
-# copy both 'package.json' and 'package-lock.json' (if available)
-COPY frontend/package*.json ./
-
-# install project dependencies
-RUN npm install
-
-# copy project files and folders to the current working directory (i.e. 'app' folder)
-COPY ./frontend/ .
-
-# build app for production with minification
-RUN npm run build
-
-EXPOSE 8080
-CMD [ "http-server", "dist" ]
+FROM nginx:1-alpine
+RUN apk add bash
+COPY ./start-nginx.sh /usr/bin/start-nginx.sh
+RUN chmod +x /usr/bin/start-nginx.sh
+WORKDIR /usr/share/nginx/html
+COPY --from=0 ./app .
+ENTRYPOINT [ "start-nginx.sh" ]
