@@ -12,8 +12,8 @@ Vue.createApp({
             env: null,
             guest: null,
             status: 'loading', // loaded, errored
-            resident: false,
-            zipCode: '02717',
+            resident: null,
+            zipCode: '',
             unemployment: null,
             assistance: {
                 ss: false,
@@ -80,7 +80,6 @@ Vue.createApp({
         async getGuest() {
             try {
                 let guestUrl = this.env.BACKEND_BASE_URL + "/guest-info/" + this.idnum;
-                console.log("In the right place");
                 console.log(guestUrl);
                 let response = await axios.get(guestUrl);
                 if (response != null){
@@ -94,10 +93,6 @@ Vue.createApp({
                 this.status = 'loaded';
             } catch (error) {
                 console.error(error);
-                console.error("Hello");
-                this.status = 'errored';
-                this.resident = true;
-                this.zipCode = '02717';
             }
         },
         addMember() {
