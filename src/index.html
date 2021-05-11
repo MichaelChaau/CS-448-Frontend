@@ -2,25 +2,115 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Manage Items</title>
+    <title>Manage Guests</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/vue@next" defer></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
     <script src="script.js" defer></script>
   </head>
   <body>
-    <h1>Manage Items</h1>
+    <h1>Manage Guests</h1>
     <div id="app">
-      <input v-model="newItemName"></input>
-      <button @click="addItem">Add Item</button>
-      <div v-show="addItemStatus === 'errored'">Could not add item.</div>
-      <div v-show="addItemStatus === 'sending'">Adding item. Please wait.</div>
-      <div v-show="status === 'errored'">Could not load items.</div>
-      <div v-show="status === 'loading'">Loading items. Please wait...</div>
-      <div v-show="status === 'loaded' && items.length === 0">No items.</div>
-      <ul v-show="status === 'loaded' && items.length !== 0">
-        <li v-for="item in items" :key="item._id">{{item.name}}</li>
-      </ul>
+      <body>
+        <h1>Enter Guest ID</h1>
+        <main id="app">
+            <p>Try typing spaces, punctuation, or special characters into each box to see the difference made by the key </p>
+            <input v-model="idnum" @keypress.prevent @keyup="idnumChange"></input> <button :disabled=!submit @click="getGuest">Submit</button>
+        </main>
+      </body>
+      <div v-show="status === 'errored'"> There was an internal error </div>
+      <form v-show="status === 'loaded'">
+      
+      <h2>Guest Info</h2>
+      <p>Is the student a resident?</p>
+      <div>
+        <input type="radio" id="yes" value=true v-model="resident" required> Yes
+      </div>
+      <div>
+        <input type="radio" id="no" value=false v-model="resident" required> No
+      </div>
+      <br>Resident Current value: {{ resident }}</br>
+
+      <p>Student Zip Code:</p>
+      <div>
+      <input type="text" id="zipCode" required 
+       minlength="5" maxlength="5" v-model="zipCode">
+      </div>
+      <br>Zip Code Current Value: {{ zipCode }}</br>
+
+      <h2>Income Sources</h2>
+      <p>Does the student recieve unemployment benefits?</p>
+      <div>
+        <input type="radio" id="yes" value=true v-model="unemployment" required> Yes
+      </div>
+      <div>
+        <input type="radio" id="no" value=false v-model="unemployment" required> No
+      </div>
+      <br>Unemployment Current Value: {{ unemployment }}</br>
+
+      <p>Does the student recieve any of the following? (check as many as apply):</p>
+      <div>
+        <input type="checkbox" id="ss" v-model="assistance.ss"> Social Security
+      </div>
+      <div>
+        <input type="checkbox" id="tanf" v-model="assistance.tanf"> TANF/EDAC
+      </div>
+      <div>
+        <input type="checkbox" id="financialAid" v-model="assistance.financialAid"> Financial Aid
+      </div>
+      <div>
+        <input type="checkbox" id="other" v-model="assistance.other"> Other
+      </div>
+      <br>Social Security Current Value: {{ assistance.ss }}</br>
+      <br>TANF Current Value: {{ assistance.tanf }}</br>
+      <br>Financial Aid Current Value: {{ assistance.financialAid }}</br>
+      <br>Other Current Value: {{ assistance.other }}</br>
+
+      <h2>Assistance</h2>
+      <p>Does the student recieve any of the following? (check as many as apply):</p>
+      <div>
+        <input type="checkbox" id="snap" v-model="assistance.snap"> SNAP/Food Stamps
+      </div>
+      <div>
+        <input type="checkbox" id="wic" v-model="assistance.wic"> WIC
+      </div>
+      <div>
+        <input type="checkbox" id="breakfast" v-model="assistance.breakfast"> School Breakfast
+      </div>
+      <div>
+        <input type="checkbox" id="lunch" v-model="assistance.lunch"> School Lunch
+      </div>
+      <div>
+        <input type="checkbox" id="sfsp" v-model="assistance.sfsp"> SFSP
+      </div>
+      <br>SNAP Current Value: {{ assistance.snap }}</br>
+      <br>WIC Current Value: {{ assistance.wic }}</br>
+      <br>School Breakfast Current Value: {{ assistance.breakfast }}</br>
+      <br>School Lunch Current Value: {{ assistance.lunch }}</br>
+      <br>SFSP Current Value: {{ assistance.sfsp }}</br>
+
+      <h2>Household</h2>
+      <button @click.prevent="addMember">Add household member</button>
+      <br>
+      <div class="household"
+      v-for="(member,counter) in household" 
+      v-bind:key="counter">
+        <span @click.prevent="deleteMember(counter)">x</span>
+        <label for="age">{{ counter+1 }}. Age of household member:</label>
+        <select name="age" v-model="member.age">
+          <option>0-4 years</option>
+          <option>5-17 years</option>            
+          <option>18-64 years</option>
+         <option>65+ years</option>
+       </select>
+      </div>
+      
+      <br>
+      <br>
+      <button @click="addGuest">Submit</button>
+      
+      </form>
+
     </div>
   </body>
 </html>
