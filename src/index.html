@@ -17,10 +17,9 @@
             <p>Try typing spaces, punctuation, or special characters into each box to see the difference made by the key </p>
             <input v-model="idnum" @keypress.prevent @keyup="idnumChange"></input> <button :disabled=!submit @click="getGuest">Submit</button>
         </main>
-        <br>ID Current Value: {{ idnum }}</br>
       </body>
-      <div v-show="status === 'loaded'"> There was an internal error </div>
-      <form v-show="status === 'errored'">
+      <div v-show="status === 'errored'"> There was an internal error </div>
+      <form v-show="status === 'loaded'">
       
       <h2>Guest Info</h2>
       <p>Is the student a resident?</p>
@@ -105,7 +104,6 @@
          <option>65+ years</option>
        </select>
       </div>
-      <br>Age Current Value: {{ age }}</br> <!-- Why is this not updating until I click something else?? -->
       
       <br>
       <br>

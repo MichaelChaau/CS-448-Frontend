@@ -12,11 +12,11 @@ Vue.createApp({
             env: null,
             guest: null,
             status: 'loading', // loaded, errored
-            resident: true,
+            resident: false,
             zipCode: '02717',
             unemployment: null,
             assistance: {
-                ss: true,
+                ss: false,
                 tanf: false,
                 financialAid: false,
                 other: false,
@@ -85,8 +85,8 @@ Vue.createApp({
                 let response = await axios.get(guestUrl);
                 if (response != null){
                     this.guest = response.data;
-                    this.resident = true;
-                    this.zipCode = 02717;
+                    this.resident = this.guest.resident;
+                    this.zipCode = this.guest.zipCode;
                     this.unemployment = this.guest.unemployment;
                     this.assistance = this.guest.assistance;
                     this.household = this.guest.household;
