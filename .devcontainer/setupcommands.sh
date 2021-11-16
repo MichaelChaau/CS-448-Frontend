@@ -1,1 +1,0 @@
-npm install -g @commitlint/cli @commitlint/config-conventional && npm install husky --save-dev && npx husky install
