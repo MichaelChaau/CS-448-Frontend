@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    command: sleep infinity
+    volumes:
+        - ..:/workspace
+    network_mode: service:plantuml_server
+  plantuml_server:
+    image: plantuml/plantuml-server:jetty
+    ports:
+        - "8888:8080"
+    
