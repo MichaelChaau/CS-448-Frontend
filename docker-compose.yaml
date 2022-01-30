@@ -2,7 +2,7 @@ version: "3.8"
 services:
 
   frontend-server:
-    image: registry.gitlab.com/librefoodpantry/training/spikeathons/winter-2021/stoney-manage-items/frontend:latest
+    image: registry.gitlab.com/librefoodpantry/client-solutions/theas-pantry/guestinfosystem/guestinfofrontend
     environment:
       BACKEND_BASE_URL: http://localhost:10001/v0
     ports:
