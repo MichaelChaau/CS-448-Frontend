@@ -4,7 +4,7 @@ RUN wget --no-check-certificate https://github.com/stedolan/jq/releases/download
 RUN cp /tmp/jq-linux64 /usr/bin/jq
 RUN chmod +x /usr/bin/jq
 WORKDIR /app
-COPY ./src .
+COPY ./src
 RUN jq 'to_entries | map_values({ (.key) : ("$" + .key) }) | reduce .[] as $item ({}; . + $item)' ./env.json > ./env.tmp.json && mv ./env.tmp.json ./env.json
 
 FROM nginx:1-alpine
