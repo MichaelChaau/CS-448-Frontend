@@ -1,88 +1,71 @@
 <template>
     <form v-on:submit.prevent="submitForm">
-        <h1>Thea's Pantry Guest Registration</h1>
-        <p>This form is to be used by staff to track visits to Thea's Pantry by students.</p>
-        <p>Please fill out all required sections of this form</p>
-        <p>Resident or Commuter</p>
-            <input type="radio" id="resdient" value="resident" name="campusStatus" v-model="campusStatus">
-            <label for="resdient">Resident</label>
+        <h1>Guest Info</h1>
+        <p>Is the student a resident?</p>
+            <input type="radio" id="yes" value="yes" name="campusStatus" v-model="campusStatus" required>
+            <label for="yes">Yes</label>
         <br>
-            <input type="radio" id="commuter" value="commuter" name="campusStatus" v-model="campusStatus">
-            <label for="commuter">Commuter</label>
+            <input type="radio" id="no" value="no" name="campusStatus" v-model="campusStatus" required>
+            <label for="no">No</label>
         <br>
-        <p>Students Zipcode(If resident put 01602)</p>
-            <input v-model='zipCode'>
+        <p>Student Zipcode(If resident put 01602):</p>
+            <input type="text" id="zipCode" required minlength="5" maxlength="5" v-model="zipCode">
         <br>
-        <p>How many people are in your household?</p>
-        <select v-model="householdStatus">
-            <option disabled value="">Please select one</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>More than 5...</option>
-        </select>
+        <h2>Income Sources</h2>
+        <p>Does the student recive unemployemnt benefits?</p>
+            <input type="radio" id="yes" value="yes" name="unemployementBenefit" v-model="unemploymentBenefit" required>
+            <label for="yes">Yes</label>
         <br>
-        <p>Student Age:</p>
-            <select v-model="studentAge">
-            <option disabled value="">Please select one</option>
-            <option>0-4</option>
-            <option>4-17</option>
-            <option>18-64</option>
-            <option>65 or Older...</option>
-        </select>
+            <input type="radio" id="no" value="no" name="unemploymentBenefit" v-model="unemploymentBenefit" required>
+            <label for="no">no</label>
         <br>
-        <p>Employment Status:</p>
-            <input type="radio" id="employed" value="employed" name="employmentStatus" v-model="employmentStatus">
-            <label for="employed">Employed</label>
-        <br>
-            <input type="radio" id="unemployed" value="unemployed" name="employmentStatus" v-model="employmentStatus">
-            <label for="unEmployed">Unemployed</label>
-        <br>
-        <p>Does the student recive any of the following?</p>
+        <p>Does the student recive any of the following? (check as many as apply):</p>
             <input type="checkbox" id="social_security" value="social_security" v-model="studentBenifets">
             <label for="social_security">Social Security</label>
             <p></p>
             <input type="checkbox" id="tanf_eadc" value="tanf_eadc" v-model="studentBenifets">
             <label for="tanf_eadc">TANF/EADC</label>
             <p></p>
-            <input type="checkbox" id="snap_fs" value="snap_fs" v-model="studentBenifets">
-            <label for="snap_fs">SNAP/Food Stamps</label>
-            <p></p>
-            <input type="checkbox" id="wic" value="wic" v-model="studentBenifets">
-            <label for="wic">WIC</label>
-            <p></p>
-            <input type="checkbox" id="sfsp" value="sfsp" v-model="studentBenifets">
-            <label for="sfsp">SFSP</label>
-            <p></p>
-            <input type="checkbox" id="schoolBreafast" value="schoolBreafast" v-model="studentBenifets">
-            <label for="schoolBreafast">School Breakfast</label>
-            <p></p>
-            <input type="checkbox" id="schoolLunch" value="schoolLunch" v-model="studentBenifets">
-            <label for="schoolLunch">School Lunch</label>
-            <p></p>
-            <input type="checkbox" id="finacialAid" value="files" v-model="studentBenifets">
+            <input type="checkbox" id="finacialAid" value="finacialAid" v-model="studentBenifets">
             <label for="finacialAid">Finacial Aid</label>
             <p></p>
             <input type="checkbox" id="other" value="other" v-model="studentBenifets">
             <label for="other">Other</label>
+        <br>
+        <h2>Assistance</h2>
+        <p>Does the student recive any of the following? (Check as many as apply):</p>
+            <input type="checkbox" id="snap_foodStamps" value="snap_foodStamps" v-model="assistance">
+            <label for="snap_foodStamps">SNAP/Food Stamps</label>
             <p></p>
-            <input type="checkbox" id="none" value="none" v-model="studentBenifets">
-            <label for="none">None</label>
+            <input type="checkbox" id="wic" value="wic" v-model="assistance">
+            <label for="wic">WIC</label>
+            <p></p>
+            <input type="checkbox" id="schoolBreakfast" value="schoolBreakfast" v-model="assistance">
+            <label for="schoolBreakfast">School Breakfast</label>
+            <p></p>
+            <input type="checkbox" id="schoolLunch" value="schoolLunch" v-model="assistance">
+            <label for="schoolLunch">School Lunch</label>
+            <p></p>
+            <input type="checkbox" id="sfsp" value="sfsp" v-model="assistance">
+            <label for="sfsp">SFSP</label>
         <br>
-        <p>Would the student like assistance applying for SNAP?</p>
-            <input type="radio" id="yes" value="yes" name="snapAssistance" v-model="snapAssistance">
-            <label for="yes">Yes</label>
+        <h2>Household</h2>
         <br>
-            <input type="radio" id="no" value="no" name="snapAssistance" v-model="snapAssistance">
-            <label for="no">No</label>
+        <button @click.prevent="addMember">Add Household Member</button>
         <br>
-        <p>Number of pounds taken/donated:</p>
-            <input v-model='pounds'>
+        <div class="household" v-for="(member,counter) in household" v-bind:key="counter">
+            <span @click.prevent="deleteMember(counter)">x</span>
+            <br>
+            <label for="age">Age of household member:</label>
+                <select name="age" v-model="member.age">
+                <option>0-4 years</option>
+                <option>5-17 years</option>
+                <option>18-64 years</option>
+                <option>65+ years</option>
+        </select>
         <br>
-        <br>
-        <button type="submit">Submit Form</button>
+        </div>
+        <button @click="submitForm">Submit Form</button>
     </form>
 </template>
     
@@ -96,18 +79,26 @@ export default {
     return {
       campusStatus: '',
       zipCode: '',
-      householdStatus: '',
-      studentAge: '',
-      employmentStatus: '',
+      unemployementBenefit: '',
       studentBenifets: [],
-      snapAssistance: '',
-      pounds: '',
+      assistance: [],
+      household: [{
+          age: ''
+      }],
     }
-  }, 
-    methods: {
+  },
+methods: {
         async submitForm(){
             let newGuestInfo = { campusStatus: this.campusStatus, zipCode: this.zipCode, householdStatus: this.householdStatus, studentAge: this.studentAge, employmentStatus: this.employmentStatus, studentBenifets: this.studentBenifets, snapAssistance: this.snapAssistance, pounds: this.pounds};
             axios.post("http://localhost:10001/v0", newGuestInfo);
+        },
+        addMember() {
+            this.household.push({
+                age: ''
+            })
+        },
+        deleteMember(counter){
+            this.household.splice(counter, 1);
         }
     }
 }
