@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 function isDigit(key) {
     return key >= '0' && key <= '9';
 }
@@ -27,8 +29,8 @@ export default{
           idInputState: 'manual',
           swipeZeros: 0,
           submit: false,
-      }
-  },
+        }
+    },
 
     methods: {
       idnumChange(e) {
