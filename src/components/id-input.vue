@@ -1,12 +1,7 @@
-<!-- Implement the id-input here -->
+
 <template>
-    <head>
-    <meta charset="utf-8">
-    <title>ID Input</title>
-    <link rel="stylesheet" href="style.css">
-    <script type="application/javascript" src="https://unpkg.com/vue@next" defer></script>
-  </head>
   <body>
+    <title>ID Input</title>
     <h1>Enter ID</h1>
     <main id="app">
         <p>Try typing spaces, punctuation, or special characters into each box to see the difference made by the key handler.</p>
@@ -14,7 +9,6 @@
       </main>
   </body>
 </template>
-
 <script>
 import axios from 'axios';
 
