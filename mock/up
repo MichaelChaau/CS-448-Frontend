@@ -1,0 +1,1 @@
+docker-compose -f docker-compose.mock.yaml up --detach frontend-server
