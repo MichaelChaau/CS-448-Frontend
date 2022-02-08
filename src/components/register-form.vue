@@ -13,11 +13,11 @@
         <br>
         <h2>Income Sources</h2>
         <p>Does the student receive unemployemnt benefits?</p>
-            <input type="radio" id="yes" value="yes" name="unemployementBenefit" v-model="unemploymentBenefit" required>
+            <input type="radio" id="yes" value="yes" name="unemployementBenefit" v-model="unemployementBenefit" required>
             <label for="yes">Yes</label>
         <br>
-            <input type="radio" id="no" value="no" name="unemploymentBenefit" v-model="unemploymentBenefit" required>
-            <label for="no">no</label>
+            <input type="radio" id="no" value="no" name="unemployementBenefit" v-model="unemployementBenefit" required>
+            <label for="no">No</label>
         <br>
         <p>Does the student receive any of the following? (check as many as apply):</p>
             <input type="checkbox" id="social_security" value="social_security" v-model="studentBenefits">
@@ -54,7 +54,7 @@
         <button @click.prevent="addMember">Add Household Member</button>
         <br>
         <div class="household" v-for="(member,counter) in household" v-bind:key="counter">
-            <span @click.prevent="deleteMember(counter)"></span>
+            <span @click.prevent="deleteMember(counter)">[Click to delete]</span>
             <br>
             <label for="age">Age of household member:</label>
                 <select name="age" v-model="member.age">
@@ -79,7 +79,7 @@ export default {
     return {
       campusStatus: '',
       zipCode: '',
-      unemploymentBenefit: '',
+      unemployementBenefit: '',
       studentBenefits: [],
       assistance: [],
       household: [{
@@ -88,15 +88,18 @@ export default {
     }
   },
 methods: {
+        // Send Guest Information to Backend 
         async submitForm(){
             let newGuestInfo = { campusStatus: this.campusStatus, zipCode: this.zipCode, householdStatus: this.householdStatus, studentAge: this.studentAge, employmentStatus: this.employmentStatus, studentBenefits: this.studentBenifets, snapAssistance: this.snapAssistance, pounds: this.pounds};
             axios.post("http://localhost:10001/v0", newGuestInfo);
         },
+        // Add household memeber to household array 
         addMember() {
             this.household.push({
                 age: ''
             })
         },
+        // Delete household memeber from household memebr array  
         deleteMember(counter){
             this.household.splice(counter, 1);
         }
