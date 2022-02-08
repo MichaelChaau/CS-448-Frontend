@@ -1,4 +1,3 @@
-<!-- This is the main page used to connect two files in components -->
 <template>
   <idInput @sendForm="getForm"></idInput>
     <div v-show="showForm">
@@ -30,5 +29,12 @@ export default{
 </script>
 
 <style>
-
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 </style>

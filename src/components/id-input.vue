@@ -1,4 +1,4 @@
-<!-- Implement the id-input here -->
+
 <template>
   <head>
     <meta charset="utf-8" />
@@ -6,6 +6,7 @@
     <!-- <script type="application/javascript" src="https://unpkg.com/vue@next" defer></script> -->
   </head>
   <body>
+    <title>ID Input</title>
     <h1>Enter ID</h1>
     <main id="app">
       <p>
@@ -17,7 +18,6 @@
     </main>
   </body>
 </template>
-
 <script>
 // import axios from 'axios';
 
