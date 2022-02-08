@@ -1,22 +1,25 @@
 <!-- Implement the id-input here -->
 <template>
-    <head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>ID Input</title>
-    <link rel="stylesheet" href="style.css">
-    <script type="application/javascript" src="https://unpkg.com/vue@next" defer></script>
+    <!-- <script type="application/javascript" src="https://unpkg.com/vue@next" defer></script> -->
   </head>
   <body>
     <h1>Enter ID</h1>
     <main id="app">
-        <p>Try typing spaces, punctuation, or special characters into each box to see the difference made by the key handler.</p>
-            <input v-model="idnum" @keypress.prevent @keyup=idnumChange></input> <button :disabled=!submit>Submit</button>
-      </main>
+      <p>
+        Try typing spaces, punctuation, or special characters into each box to
+        see the difference made by the key handler.
+      </p>
+      <input v-model="idnum" @keypress.prevent @keyup="idnumChange" />
+      <button :disabled="!submit" @click="onClick()">Submit</button>
+    </main>
   </body>
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 
 function isDigit(key) {
     return key >= '0' && key <= '9';
@@ -63,13 +66,29 @@ export default{
           this.submit = true;
         }
       }
-    }
-  }
+    },
+    onClick(){
+        //  let data = axios.getUri("http://localhost:10001/" + this.idnum); 
+        // console.log(data);
+        if(this.idnum === '1234567'){
+          console.log(this.idnum)
+          this.$emit('');
+        }
+        else {
+          if (this.idnum.length == 7) {
+          // this.submit = true;
+          this.$emit('sendForm');
+          }
+          else{
+            // this.submit = false;
+            console.log("ok");
+          }
+      }
+  },
 }
-
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

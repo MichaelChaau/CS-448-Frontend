@@ -54,7 +54,7 @@
         <button @click.prevent="addMember">Add Household Member</button>
         <br>
         <div class="household" v-for="(member,counter) in household" v-bind:key="counter">
-            <span @click.prevent="deleteMember(counter)">x</span>
+            <span @click.prevent="deleteMember(counter)"></span>
             <br>
             <label for="age">Age of household member:</label>
                 <select name="age" v-model="member.age">
@@ -79,7 +79,7 @@ export default {
     return {
       campusStatus: '',
       zipCode: '',
-      unemployementBenefit: '',
+      unemploymentBenefitt: '',
       studentBenifets: [],
       assistance: [],
       household: [{
