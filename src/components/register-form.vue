@@ -8,32 +8,32 @@
             <input type="radio" id="no" value="no" name="campusStatus" v-model="campusStatus" required>
             <label for="no">No</label>
         <br>
-        <p>Student Zipcode(If resident put 01602):</p>
+        <p>Student Zip Code (If resident put 01602):</p>
             <input type="text" id="zipCode" required minlength="5" maxlength="5" v-model="zipCode">
         <br>
         <h2>Income Sources</h2>
-        <p>Does the student recive unemployemnt benefits?</p>
+        <p>Does the student receive unemployement benefits?</p>
             <input type="radio" id="yes" value="yes" name="unemployementBenefit" v-model="unemploymentBenefit" required>
             <label for="yes">Yes</label>
         <br>
             <input type="radio" id="no" value="no" name="unemploymentBenefit" v-model="unemploymentBenefit" required>
             <label for="no">no</label>
         <br>
-        <p>Does the student recive any of the following? (check as many as apply):</p>
-            <input type="checkbox" id="social_security" value="social_security" v-model="studentBenifets">
+        <p>Does the student receive any of the following? (check as many as apply):</p>
+            <input type="checkbox" id="social_security" value="social_security" v-model="studentBenefits">
             <label for="social_security">Social Security</label>
             <p></p>
-            <input type="checkbox" id="tanf_eadc" value="tanf_eadc" v-model="studentBenifets">
+            <input type="checkbox" id="tanf_eadc" value="tanf_eadc" v-model="studentBenefits">
             <label for="tanf_eadc">TANF/EADC</label>
             <p></p>
-            <input type="checkbox" id="finacialAid" value="finacialAid" v-model="studentBenifets">
+            <input type="checkbox" id="finacialAid" value="finacialAid" v-model="studentBenefits">
             <label for="finacialAid">Finacial Aid</label>
             <p></p>
-            <input type="checkbox" id="other" value="other" v-model="studentBenifets">
+            <input type="checkbox" id="other" value="other" v-model="studentBenefits">
             <label for="other">Other</label>
         <br>
         <h2>Assistance</h2>
-        <p>Does the student recive any of the following? (Check as many as apply):</p>
+        <p>Does the student receive any of the following? (Check as many as apply):</p>
             <input type="checkbox" id="snap_foodStamps" value="snap_foodStamps" v-model="assistance">
             <label for="snap_foodStamps">SNAP/Food Stamps</label>
             <p></p>
@@ -80,7 +80,7 @@ export default {
       campusStatus: '',
       zipCode: '',
       unemploymentBenefitt: '',
-      studentBenifets: [],
+      studentBenefits: [],
       assistance: [],
       household: [{
           age: ''
@@ -89,7 +89,7 @@ export default {
   },
 methods: {
         async submitForm(){
-            let newGuestInfo = { campusStatus: this.campusStatus, zipCode: this.zipCode, householdStatus: this.householdStatus, studentAge: this.studentAge, employmentStatus: this.employmentStatus, studentBenifets: this.studentBenifets, snapAssistance: this.snapAssistance, pounds: this.pounds};
+            let newGuestInfo = { campusStatus: this.campusStatus, zipCode: this.zipCode, householdStatus: this.householdStatus, studentAge: this.studentAge, employmentStatus: this.employmentStatus, studentBenefits: this.studentBenefits, snapAssistance: this.snapAssistance, pounds: this.pounds};
             axios.post("http://localhost:10001/v0", newGuestInfo);
         },
         addMember() {
