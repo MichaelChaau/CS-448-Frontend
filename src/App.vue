@@ -1,8 +1,8 @@
 <template>
-  <idInput @sendForm="getForm"></idInput>
-    <div v-show="showForm">
-      <registerForm/>
-    </div>
+    <idInput @notSeven="hideForm($event)" @sendForm="getForm"></idInput>
+      <div v-show="showForm">
+        <registerForm/>
+      </div>
 </template>
 
 <script>
@@ -17,12 +17,20 @@ export default{
   data(){
     return{
       showForm:false,
-      test: '',
     }
   },
   methods:{
+    
+    //fires this method when user clicks submit button
     getForm(){
-     this.showForm = !this.showForm;
+     this.showForm = true;
+    },
+
+    //fires this method to hide the form when user does not enter all numbers
+    hideForm(key){
+      if(key.length < 7){
+        this.showForm = false;
+      }
     }
   },
 }
@@ -36,5 +44,6 @@ export default{
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+
 }
 </style>

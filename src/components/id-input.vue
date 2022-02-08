@@ -37,7 +37,11 @@ export default{
 
     methods: {
       idnumChange(e) {
-        // enter swipe mode if we get a semicolon as the first character
+
+        //hide input submit button if user doesnt enter all 7 numbers
+        if(this.idnum.length < 7){
+          this.submit = false;
+        }
         if (this.idInputState === 'manual' && this.idnum.length === 0 && e.key === ';') {
             this.idInputState = 'swipe';
             this.swipeZeros = 0;
@@ -58,6 +62,7 @@ export default{
             this.accept7Digits(e.key);
             }
         }
+         this.$emit('notSeven', this.idnum);
         },
       accept7Digits(key) {
         if (this.idnum.length < 7 && isDigit(key)) {
@@ -71,18 +76,11 @@ export default{
         //  let data = axios.getUri("http://localhost:10001/" + this.idnum); 
         // console.log(data);
         if(this.idnum === '1234567'){
-          console.log(this.idnum)
+          console.log(this.idnum);
           this.$emit('');
         }
         else {
-          if (this.idnum.length == 7) {
-          // this.submit = true;
-          this.$emit('sendForm');
-          }
-          else{
-            // this.submit = false;
-            console.log("ok");
-          }
+          this.$emit('sendForm'); 
       }
   },
 }
