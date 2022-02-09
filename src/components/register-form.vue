@@ -90,7 +90,13 @@ export default {
 methods: {
         // Send Guest Information to Backend 
         async submitForm(){
-            let newGuestInfo = { campusStatus: this.campusStatus, zipCode: this.zipCode, householdStatus: this.householdStatus, studentAge: this.studentAge, employmentStatus: this.employmentStatus, studentBenefits: this.studentBenifets, snapAssistance: this.snapAssistance, pounds: this.pounds};
+            let newGuestInfo = { campusStatus: this.campusStatus, zipCode: this.zipCode, unemployementBenefit: this.unemployementBenefit, studentBenefits: this.studentBenefits, employmentStatus: this.employmentStatus, assistance: this.assistance, household: this.household};
+            this.campusStatus = '';
+            this.zipCode = '';
+            this.unemployementBenefit = '';
+            this.studentBenefits = [];
+            this.assistance = [];
+            this.household= [];
             axios.post("http://localhost:10001/v0", newGuestInfo);
         },
         // Add household memeber to household array 
