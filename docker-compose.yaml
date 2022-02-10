@@ -11,7 +11,7 @@ services:
       - backend-server
 
   backend-server:
-    image: registry.gitlab.com/librefoodpantry/training/spikeathons/winter-2021/stoney-manage-items/backend:latest
+    image: registry.gitlab.com/librefoodpantry/client-solutions/theas-pantry/guestinfosystem/guestinfobackend:latest
     ports:
       - 10001:3000
     environment:
