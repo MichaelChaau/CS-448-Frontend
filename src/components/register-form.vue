@@ -15,11 +15,11 @@
         <div class="container">
             <h2>Income Sources</h2>
             <p>Does the student receive unemployemnt benefits?</p>
-                <input type="radio" id="yes" value="yes" name="unemployementBenefit" v-model="unemploymentBenefit" required>
+                <input type="radio" id="yes" value="yes" name="unemployementBenefit" v-model="unemployementBenefit" required>
                 <label for="yes">Yes</label>
                  <br>
-                <input type="radio" id="no" value="no" name="unemploymentBenefit" v-model="unemploymentBenefit" required>
-                <label for="no">no</label>
+                <input type="radio" id="no" value="no" name="unemployementBenefit" v-model="unemployementBenefit" required>
+                <label for="no">No</label>
             <p>Does the student receive any of the following? (check as many as apply):</p>
                 <input type="checkbox" id="social_security" value="social_security" v-model="studentBenefits">
                 <label for="social_security">Social Security</label>
@@ -96,8 +96,9 @@ export default {
 methods: {
         // Send Guest Information to Backend 
         async submitForm(){
-            let newGuestInfo = { campusStatus: this.campusStatus, zipCode: this.zipCode, unemployementBenefit: this.unemployementBenefit, studentBenefits: this.studentBenefits, employmentStatus: this.employmentStatus, assistance: this.assistance, household: this.household};
+            let newGuestInfo = {idNumbercampus: this.idNumber, campusStatus: this.campusStatus, zipCode: this.zipCode, unemployementBenefit: this.unemployementBenefit, studentBenefits: this.studentBenefits, employmentStatus: this.employmentStatus, assistance: this.assistance, household: this.household};
             this.campusStatus = '';
+            this.idNumber = '';
             this.zipCode = '';
             this.unemployementBenefit = '';
             this.studentBenefits = [];
