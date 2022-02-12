@@ -1,7 +1,7 @@
 <template>
-    <idInput @notSeven="hideForm($event)" @sendForm="getForm"></idInput>
+    <idInput @notSeven="hideForm($event)" @sendForm="getForm" @sendId="saveId($event)"></idInput>
       <div v-show="showForm">
-        <registerForm/>
+        <registerForm :ID_Number = "idnum" />
       </div>
 </template>
 
@@ -25,6 +25,11 @@ export default{
     //fires this method when user clicks submit button
     getForm(){
      this.showForm = true;
+    },
+
+    //Save Id Number from id-input.vue
+    saveId(idnum){
+      this.idnum = idnum;
     },
 
     //fires this method to hide the form when user does not enter all numbers

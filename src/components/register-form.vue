@@ -2,6 +2,7 @@
     <form v-on:submit.prevent="submitForm">
         <div class="container">
             <h1>Guest Info</h1>
+            <p>Guest Id Number: {{ID_Number}}</p>
             <p>Is the student a resident?</p>
                 <input type="radio" id="yes" value="yes" name="campusStatus" v-model="campusStatus" required>
                 <label for="yes">Yes</label>
@@ -79,6 +80,7 @@ export default {
   data(){
     return {
       campusStatus: '',
+      idNumber: this.$props,
       zipCode: '',
       unemployementBenefit: '',
       studentBenefits: [],
@@ -87,6 +89,9 @@ export default {
           age: ''
       }],
     }
+  },
+  props: {
+      ID_Number: String //Guest's Id Number
   },
 methods: {
         // Send Guest Information to Backend 

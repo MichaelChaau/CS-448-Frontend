@@ -82,6 +82,8 @@ export default{
         }
         else {
           this.$emit('sendForm'); 
+          let idnum = this.idnum;
+          this.$emit('sendId', idnum);
       }
   },
 }
