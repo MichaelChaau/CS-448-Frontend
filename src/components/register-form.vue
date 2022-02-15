@@ -93,11 +93,11 @@ export default {
   props: {
       ID_Number: String //Guest's Id Number
   },
-  beforeUpdate(){
+  beforeUpdate(){ //Called During form creation to save ID #
       this.saveID();
   },
 methods: {
-        //Saves Id # to local variable idNumber upon form creation 
+        //Saves ID # to local variable idNumber upon form creation
         async saveID(){
             this.idNumber = this.ID_Number;
         },
@@ -113,7 +113,7 @@ methods: {
             this.household= [{
                 age: ''
             }];
-            axios.post("https://jsonplaceholder.typicode.com/posts", newGuestInfo);
+            axios.post("http://localhost:10001/v0", newGuestInfo);
         },
         // Add household memeber to household array 
         addMember() {
