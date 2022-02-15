@@ -80,7 +80,7 @@ export default {
   data(){
     return {
       campusStatus: '',
-      idNumber: this.$props,
+      idNumber: this.$props, //Id number from id-input.vue
       zipCode: '',
       unemployementBenefit: '',
       studentBenefits: [],
@@ -103,7 +103,9 @@ methods: {
             this.unemployementBenefit = '';
             this.studentBenefits = [];
             this.assistance = [];
-            this.household= [];
+            this.household= [{
+                age: ''
+            }];
             axios.post("http://localhost:10001/v0", newGuestInfo);
         },
         // Add household memeber to household array 
