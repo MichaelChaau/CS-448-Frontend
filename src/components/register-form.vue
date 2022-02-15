@@ -3,6 +3,7 @@
         <div class="container">
             <h1>Guest Info</h1>
             <p>Guest Id Number: {{ID_Number}}</p>
+            <p>{{idNumber}}</p>
             <p>Is the student a resident?</p>
                 <input type="radio" id="yes" value="yes" name="campusStatus" v-model="campusStatus" required>
                 <label for="yes">Yes</label>
