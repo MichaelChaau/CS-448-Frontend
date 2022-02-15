@@ -1,9 +1,8 @@
 <template>
-    <form v-on:submit.prevent="submitForm">
+    <form v-on:submit.prevent="submitForm" >
         <div class="container">
             <h1>Guest Info</h1>
-            <p>Guest Id Number: {{ID_Number}}</p>
-            <p>{{idNumber}}</p>
+            <p>Guest Id Number: {{idNumber}}</p>
             <p>Is the student a resident?</p>
                 <input type="radio" id="yes" value="yes" name="campusStatus" v-model="campusStatus" required>
                 <label for="yes">Yes</label>
@@ -15,11 +14,11 @@
         </div>
         <div class="container">
             <h2>Income Sources</h2>
-            <p>Does the student receive unemployemnt benefits?</p>
-                <input type="radio" id="yes" value="yes" name="unemployementBenefit" v-model="unemployementBenefit" required>
+            <p>Does the student receive unemployment benefits?</p>
+                <input type="radio" id="yes" value="yes" name="unemploymentBenefit" v-model="unemploymentBenefit" required>
                 <label for="yes">Yes</label>
                  <br>
-                <input type="radio" id="no" value="no" name="unemployementBenefit" v-model="unemployementBenefit" required>
+                <input type="radio" id="no" value="no" name="unemploymentBenefit" v-model="unemploymentBenefit" required>
                 <label for="no">No</label>
             <p>Does the student receive any of the following? (check as many as apply):</p>
                 <input type="checkbox" id="social_security" value="social_security" v-model="studentBenefits">
@@ -81,7 +80,7 @@ export default {
   data(){
     return {
       campusStatus: '',
-      idNumber: this.$props, //Id number from id-input.vue
+      idNumber: '', //Id number from id-input.vue
       zipCode: '',
       unemployementBenefit: '',
       studentBenefits: [],
@@ -94,20 +93,27 @@ export default {
   props: {
       ID_Number: String //Guest's Id Number
   },
+  beforeUpdate(){
+      this.saveID();
+  },
 methods: {
+        //Saves Id # to local variable idNumber upon form creation 
+        async saveID(){
+            this.idNumber = this.ID_Number;
+        },
         // Send Guest Information to Backend 
         async submitForm(){
-            let newGuestInfo = {idNumbercampus: this.idNumber, campusStatus: this.campusStatus, zipCode: this.zipCode, unemployementBenefit: this.unemployementBenefit, studentBenefits: this.studentBenefits, employmentStatus: this.employmentStatus, assistance: this.assistance, household: this.household};
+            let newGuestInfo = {idNumbercampus: this.idNumber, campusStatus: this.campusStatus, zipCode: this.zipCode, unemploymentBenefit: this.unemploymentBenefit, studentBenefits: this.studentBenefits, employmentStatus: this.employmentStatus, assistance: this.assistance, household: this.household};
             this.campusStatus = '';
             this.idNumber = '';
             this.zipCode = '';
-            this.unemployementBenefit = '';
+            this.unemploymentBenefit = '';
             this.studentBenefits = [];
             this.assistance = [];
             this.household= [{
                 age: ''
             }];
-            axios.post("http://localhost:10001/v0", newGuestInfo);
+            axios.post("https://jsonplaceholder.typicode.com/posts", newGuestInfo);
         },
         // Add household memeber to household array 
         addMember() {
