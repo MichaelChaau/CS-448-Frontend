@@ -52,7 +52,7 @@ export default{
   text-align: center;
   color: #2c3e50;
   /* margin-top: 60px; */
-  max-width: 100vw;
+  max-width: 50em;
   padding: 5vw;
   margin: auto;
 }
