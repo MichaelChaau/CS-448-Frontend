@@ -1,6 +1,15 @@
 version: "3.8"
 services:
 
+  web:
+    container_name: frontend-server
+    build: .
+    ports:
+      - 8081:8080
+    networks:
+     - backend-network
+
+
   backend-server:
     image: registry.gitlab.com/librefoodpantry/training/spikeathons/winter-2021/stoney-manage-items/backend:latest
     ports:

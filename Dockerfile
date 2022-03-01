@@ -21,5 +21,5 @@ RUN rm -rf ./*
 COPY --from=builder /app/dist .
 # Containers run nginx with global directives and daemon off
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
-
-EXPOSE 8081
+##Set to port 
+EXPOSE 8080
