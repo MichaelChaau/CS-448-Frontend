@@ -5,12 +5,13 @@ services:
     container_name: frontend-server
     build: .
     ports:
-      - 8081:80
+      - 8080:80
     networks:
      - backend-network
 
   backend-server:
-    image: registry.gitlab.com/librefoodpantry/training/spikeathons/winter-2021/stoney-manage-items/backend:latest
+    image: registry.gitlab.com/librefoodpantry/client-solutions/theas-pantry/guestinfosystem/guestinfobackend:latest
+    init: true
     ports:
       - 10001:3000
     environment:

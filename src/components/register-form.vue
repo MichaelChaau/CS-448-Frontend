@@ -2,54 +2,52 @@
     <form v-on:submit.prevent="submitForm" >
         <div class="container">
             <h1>Guest Info</h1>
-            <p>Guest Id Number: {{idNumber}}</p>
+            <p>Guest Id Number: {{studentID}}</p>
             <p>Is the student a resident?</p>
-                <input type="radio" id="yes" value="yes" name="campusStatus" v-model="campusStatus" required>
-                <label for="yes">Yes</label>
-                <br>
-                <input type="radio" id="no" value="no" name="campusStatus" v-model="campusStatus" required>
-                <label for="no">No</label>
+                <select v-model="resident">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
             <p>Student Zip Code (If resident put 01602):</p>
                 <input type="text" id="Zip Code" required minlength="5" maxlength="5" v-model="zipCode">
         </div>
         <div class="container">
             <h2>Income Sources</h2>
             <p>Does the student receive unemployment benefits?</p>
-                <input type="radio" id="yes" value="yes" name="unemploymentBenefit" v-model="unemploymentBenefit" required>
-                <label for="yes">Yes</label>
-                 <br>
-                <input type="radio" id="no" value="no" name="unemploymentBenefit" v-model="unemploymentBenefit" required>
-                <label for="no">No</label>
+                <select v-model="unemployment">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
             <p>Does the student receive any of the following? (check as many as apply):</p>
-                <input type="checkbox" id="social_security" value="social_security" v-model="studentBenefits">
+                <input type="checkbox" id="social_security" v-bind:value="true" v-model="assistance.socSec">
                 <label for="social_security">Social Security</label>
                 <p></p>
-                <input type="checkbox" id="tanf_eadc" value="tanf_eadc" v-model="studentBenefits">
+                <input type="checkbox" id="tanf_eadc" v-bind:value="true" v-model="assistance.TANF">
                 <label for="tanf_eadc">TANF/EADC</label>
                 <p></p>
-                <input type="checkbox" id="finacialAid" value="finacialAid" v-model="studentBenefits">
+                <input type="checkbox" id="finacialAid" v-bind:value="true" v-model="assistance.finAid">
                 <label for="finacialAid">Finacial Aid</label>
                 <p></p>
-                <input type="checkbox" id="other" value="other" v-model="studentBenefits">
+                <input type="checkbox" id="other" v-bind:value="true" v-model="assistance.other">
                 <label for="other">Other</label>
         </div>
         <div class="container">
             <h2>Assistance</h2>
             <p>Does the student receive any of the following? (Check as many as apply):</p>
-                <input type="checkbox" id="snap_foodStamps" value="snap_foodStamps" v-model="assistance">
-                <label for="snap_foodStamps">SNAP/Food Stamps</label>
+                <input type="checkbox" id="SNAP" v-bind:value="true"  v-model="assistance.SNAP">
+                <label for="SNAP">SNAP/Food Stamps</label>
                 <p></p>
-                <input type="checkbox" id="wic" value="wic" v-model="assistance">
-                <label for="wic">WIC</label>
+                <input type="checkbox" id="assistance" v-bind:value="true" v-model="assistance.WIC">
+                <label for="WIC">WIC</label>
                 <p></p>
-                <input type="checkbox" id="schoolBreakfast" value="schoolBreakfast" v-model="assistance">
-                <label for="schoolBreakfast">School Breakfast</label>
+                <input type="checkbox" id="breakfast" v-bind:value="true"  v-model="assistance.breakfast">
+                <label for="breakfast">School Breakfast</label>
                 <p></p>
-                <input type="checkbox" id="schoolLunch" value="schoolLunch" v-model="assistance">
-                <label for="schoolLunch">School Lunch</label>
+                <input type="checkbox" id="lunch" v-bind:value="true" v-model="assistance.lunch">
+                <label for="lunch">School Lunch</label>
                 <p></p>
-                <input type="checkbox" id="sfsp" value="sfsp" v-model="assistance">
-                <label for="sfsp">SFSP</label>
+                <input type="checkbox" id="SFSP" v-bind:value="true" v-model="assistance.SFSP">
+                <label for="SFSP">SFSP</label>
         </div>
         <div class="container">
             <h2>Household</h2>
@@ -79,15 +77,24 @@ export default {
   name: 'RegisterForm',
   data(){
     return {
-      campusStatus: '',
-      idNumber: '', //Id number from id-input.vue
-      zipCode: '',
-      unemployementBenefit: '',
-      studentBenefits: [],
-      assistance: [],
-      household: [{
+        studentID: '',
+        resident: false,
+        zipCode: '',
+        unemployment: false,
+        assistance: {
+            socSec: false,
+            TANF: false,
+            finAid: false,
+            other: false,
+            SNAP: false,
+            WIC: false,
+            breakfast: false,
+            lunch: false,
+            SFSP: false,
+        },
+        household: [{
           age: ''
-      }],
+      }]
     }
   },
   props: {
@@ -96,24 +103,40 @@ export default {
   beforeUpdate(){ //Called During form creation to save ID #
       this.saveID();
   },
-methods: {
+  methods: {
         //Saves ID # to local variable idNumber upon form creation
         async saveID(){
-            this.idNumber = this.ID_Number;
+            this.studentID = this.ID_Number;
         },
         // Send Guest Information to Backend 
         async submitForm(){
-            let newGuestInfo = {idNumbercampus: this.idNumber, campusStatus: this.campusStatus, zipCode: this.zipCode, unemploymentBenefit: this.unemploymentBenefit, studentBenefits: this.studentBenefits, employmentStatus: this.employmentStatus, assistance: this.assistance, household: this.household};
-            this.campusStatus = '';
-            this.idNumber = '';
+            let newGuestInfo = {studentID: this.studentID, 
+            resident: this.resident, 
+            zipCode: this.zipCode, 
+            unemployment: this.unemployment,
+            assistance: this.assistance, 
+            household: this.household};
+            
+            this.studentID = '';
+            this.resident = false;
             this.zipCode = '';
-            this.unemploymentBenefit = '';
-            this.studentBenefits = [];
-            this.assistance = [];
-            this.household= [{
+            this.unemployment = false;
+            this.assistance = {
+                socSec: false,
+                TANF: false,
+                finAid: false,
+                other: false,
+                SNAP: false,
+                WIC: false,
+                breakfast: false,
+                lunch: false,
+                SFSP: false,
+            };
+            this.household = [{
                 age: ''
             }];
-            axios.post("http://localhost:10001/v0", newGuestInfo);
+            
+            axios.post("http://localhost:10001/" + this.studentID, newGuestInfo);
         },
         // Add household memeber to household array 
         addMember() {
