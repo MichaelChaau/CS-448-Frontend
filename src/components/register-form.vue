@@ -5,8 +5,9 @@
             <p>Guest Id Number: {{studentID}}</p>
             <p>Is the student a resident?</p>
                 <select v-model="resident">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+                    <option disabled value="">Please select one</option>
+                    <option :value='true'>Yes</option>
+                    <option :value='false'>No</option>
                 </select>
             <p>Student Zip Code (If resident put 01602):</p>
                 <input type="text" id="Zip Code" required minlength="5" maxlength="5" v-model="zipCode">
@@ -15,8 +16,9 @@
             <h2>Income Sources</h2>
             <p>Does the student receive unemployment benefits?</p>
                 <select v-model="unemployment">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+                    <option disabled value="">Please select one</option>
+                    <option :value='true'>Yes</option>
+                    <option :value='false'>No</option>
                 </select>
             <p>Does the student receive any of the following? (check as many as apply):</p>
                 <input type="checkbox" id="social_security" v-bind:value="true" v-model="assistance.socSec">
@@ -65,6 +67,8 @@
              <i class="fas fa-times" @click.prevent="deleteMember(counter)"></i>
             </div>
         </div>
+        <div v-show="addGuestStatus === 'errored'">Could not add Guest</div>
+        <div v-show="addGuestStatus === 'sending'">Adding Guest. Please wait.</div>
         <button class="submit" @click="submitForm">Submit Form</button>
     </form>
 </template>
@@ -94,7 +98,8 @@ export default {
         },
         household: [{
           age: ''
-      }]
+      }],
+      addGuestStatus: 'idle'
     }
   },
   props: {
@@ -110,33 +115,31 @@ export default {
         },
         // Send Guest Information to Backend 
         async submitForm(){
-            let newGuestInfo = {studentID: this.studentID, 
-            resident: this.resident, 
-            zipCode: this.zipCode, 
-            unemployment: this.unemployment,
-            assistance: this.assistance, 
-            household: this.household};
-            
-            this.studentID = '';
-            this.resident = false;
-            this.zipCode = '';
-            this.unemployment = false;
-            this.assistance = {
-                socSec: false,
-                TANF: false,
-                finAid: false,
-                other: false,
-                SNAP: false,
-                WIC: false,
-                breakfast: false,
-                lunch: false,
-                SFSP: false,
-            };
-            this.household = [{
-                age: ''
-            }];
-            
-            axios.post("http://localhost:10001/" + this.studentID, newGuestInfo);
+            this.addGuestStatus = 'sending';
+            axios.put("http://localhost:10001/guest/" + this.studentID, {
+                studentID: this.studentID,
+                resident: this.resident,
+                zipCode: this.zipCode,
+                unemployment: this.unemployment,
+                assistance: {
+                    socSec: this.assistance.socSec,
+                    TANF: this.assistance.TANF,
+                    finAid: this.assistance.finAid,
+                    other: this.assistance.other,
+                    SNAP: this.assistance.SNAP,
+                    breakfast: this.assistance.breakfast,
+                    lunch: this.assistance.lunch,
+                    SFSP: this.assistance.SFSP,
+                },
+                // Household will not be added in final version 
+            })
+                .then(() => {
+                    this.addGuestStatus = 'idle';
+                })
+                .catch(error => {
+                    console.error(error);
+                    this.addGuestStatus = "errored";
+                })
         },
         // Add household memeber to household array 
         addMember() {

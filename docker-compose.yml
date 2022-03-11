@@ -10,10 +10,10 @@ services:
      - backend-network
 
   backend-server:
-    image: registry.gitlab.com/librefoodpantry/client-solutions/theas-pantry/guestinfosystem/guestinfobackend:latest
+    image: registry.gitlab.com/librefoodpantry/client-solutions/theas-pantry/guestinfosystem/guestinfobackend:main
     init: true
     ports:
-      - 10001:3000
+      - 10001:10001
     environment:
       HOST_BASE_URL: http://localhost:10001
       MONGO_URI: mongodb://backend-database
